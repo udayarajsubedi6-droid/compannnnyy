@@ -1,79 +1,188 @@
-import { Award, Target, Users, CheckCircle } from 'lucide-react';
-import { team } from '../data';
+import { Award, Target, CheckCircle } from 'lucide-react';
+import { useEffect, useState, useRef } from 'react';
 
-export default function About() {
+interface AboutProps {
+  onNavigate: (page: string) => void;
+}
+
+export default function About({ onNavigate }: AboutProps) {
+  const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
+  const observerRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    Object.values(observerRefs.current).forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div>
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">About BuildPro</h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            Building excellence since 1998 with dedication, expertise, and integrity
-          </p>
+    <div className="font-sans">
+      <section className="relative h-64 sm:h-80 md:h-96 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url('https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=1920')`
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/85 via-blue-900/70 to-red-700/75"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
+          <div className="animate-fadeInUp">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white animate-slideInLeft">
+              About Red Earth Construction
+            </h1>
+            <p className="text-lg sm:text-xl md:text-2xl text-red-100 max-w-3xl animate-slideInLeft animation-delay-200">
+              Building excellence with dedication, expertise, and integrity since 2018
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="py-16 bg-white">
+      <section
+        id="story"
+        ref={(el) => (observerRefs.current['story'] = el)}
+        className="py-12 sm:py-16 md:py-20 bg-white"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
-              <p className="text-gray-600 mb-4">
-                Founded in 1998, BuildPro has grown from a small family-owned business into one of the region's most trusted construction companies. Our journey has been built on a foundation of quality craftsmanship, honest business practices, and unwavering commitment to client satisfaction.
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div
+              className={`transform transition-all duration-700 ${
+                isVisible['story'] ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
+              }`}
+            >
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 sm:mb-8">
+                Our Story
+              </h2>
+
+              <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg">
+                Established in 2018, Red Earth Construction has quickly become a leading name in the construction industry, known for delivering high-quality, reliable, and innovative solutions.
               </p>
-              <p className="text-gray-600 mb-4">
-                Over the past 25 years, we've completed more than 500 projects, ranging from custom residential homes to large-scale commercial developments. Each project reflects our dedication to excellence and our passion for turning architectural visions into reality.
+
+              <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-base sm:text-lg">
+                In just a few years, we have successfully completed over 200 projects, ranging from residential developments to large commercial and infrastructure ventures, all reflecting our commitment to excellence and precision.
               </p>
-              <p className="text-gray-600">
-                Today, our team of 50+ professionals brings together decades of combined experience, cutting-edge techniques, and a collaborative approach that ensures every project exceeds expectations.
+
+              <p className="text-gray-600 leading-relaxed text-base sm:text-lg">
+                Our team of skilled professionals combines modern construction techniques, industry expertise, and a results-driven approach to consistently deliver projects that exceed client expectations.
               </p>
+
+              <div className="mt-6 sm:mt-8 flex items-center gap-4">
+                <div className="w-1 h-12 bg-red-600"></div>
+                <div>
+                  <p className="text-2xl sm:text-3xl font-bold text-red-600">200+</p>
+                  <p className="text-gray-600 text-sm sm:text-base">Projects Completed</p>
+                </div>
+              </div>
             </div>
-            <div className="relative">
-              <img
-                src="https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Construction site"
-                className="rounded-xl shadow-2xl"
-              />
+
+            <div
+              className={`relative transform transition-all duration-700 ${
+                isVisible['story'] ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
+              }`}
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-blue-600/20 rounded-2xl transform rotate-3"></div>
+                <img
+                  src="https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Construction site"
+                  className="relative rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 w-full"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <div className="flex items-center gap-3 mb-4">
-                <Target className="h-10 w-10 text-blue-600" />
-                <h2 className="text-2xl font-bold text-gray-900">Our Mission</h2>
-              </div>
-              <p className="text-gray-600">
-                To deliver exceptional construction services that exceed client expectations through innovative solutions, superior craftsmanship, and unwavering commitment to quality. We strive to build lasting relationships and create structures that stand the test of time.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <div className="flex items-center gap-3 mb-4">
-                <Award className="h-10 w-10 text-blue-600" />
-                <h2 className="text-2xl font-bold text-gray-900">Our Vision</h2>
-              </div>
-              <p className="text-gray-600">
-                To be the most trusted and respected construction company in the region, recognized for our integrity, innovation, and excellence. We aim to set new standards in the industry while maintaining our core values of quality, safety, and client satisfaction.
-              </p>
-            </div>
-          </div>
+      <section
+        id="mission"
+        ref={(el) => (observerRefs.current['mission'] = el)}
+        className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden"
+      >
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600 rounded-full filter blur-3xl"></div>
         </div>
-      </section>
 
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose BuildPro
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div
+            className={`text-center mb-12 sm:mb-16 transform transition-all duration-700 ${
+              isVisible['mission'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            }`}
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Mission & Vision
             </h2>
+            <div className="w-24 h-1 bg-red-600 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
+            <div
+              className={`bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg border border-gray-100 transform transition-all duration-700 hover:shadow-2xl hover:-translate-y-1 ${
+                isVisible['mission'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+              }`}
+              style={{ transitionDelay: '100ms' }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-red-600/10 rounded-lg">
+                  <Target className="h-6 w-6 sm:h-8 sm:w-8 text-red-600" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Our Mission</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed text-base sm:text-lg">
+                To deliver exceptional construction services that exceed client expectations through innovative solutions, superior craftsmanship, and unwavering commitment to quality and excellence.
+              </p>
+            </div>
+
+            <div
+              className={`bg-white p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg border border-gray-100 transform transition-all duration-700 hover:shadow-2xl hover:-translate-y-1 ${
+                isVisible['mission'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+              }`}
+              style={{ transitionDelay: '200ms' }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-red-600/10 rounded-lg">
+                  <Award className="h-6 w-6 sm:h-8 sm:w-8 text-red-600" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Our Vision</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed text-base sm:text-lg">
+                To be the most trusted and respected construction company in the region, known for integrity, innovation, excellence, and our unwavering commitment to building a better future.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="why-choose"
+        ref={(el) => (observerRefs.current['why-choose'] = el)}
+        className="py-12 sm:py-16 md:py-20 bg-white"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            className={`text-center mb-12 sm:mb-16 transform transition-all duration-700 ${
+              isVisible['why-choose'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            }`}
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Why Choose Us
+            </h2>
+            <div className="w-24 h-1 bg-red-600 mx-auto"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
             {[
               {
                 title: 'Experienced Team',
@@ -81,78 +190,47 @@ export default function About() {
               },
               {
                 title: 'Quality Assurance',
-                description: 'Rigorous quality control at every stage of construction'
+                description: 'Strict quality control at every stage of construction'
               },
               {
                 title: 'On-Time Delivery',
-                description: 'Proven track record of completing projects on schedule'
+                description: 'Proven record of meeting and exceeding project deadlines'
               },
               {
                 title: 'Transparent Pricing',
-                description: 'Clear, detailed estimates with no hidden costs'
+                description: 'Clear estimates with no hidden costs or surprises'
               },
               {
                 title: 'Safety First',
-                description: 'Industry-leading safety standards and compliance'
+                description: 'Industry-leading safety standards and certifications'
               },
               {
                 title: 'Client Focus',
-                description: '99% client satisfaction rate and ongoing support'
+                description: '99% client satisfaction with dedicated support'
               }
             ].map((item, index) => (
-              <div key={index} className="flex gap-4">
-                <CheckCircle className="h-6 w-6 text-green-500 flex-shrink-0 mt-1" />
+              <div
+                key={index}
+                className={`group flex gap-4 p-4 sm:p-6 rounded-xl hover:bg-red-50 transition-all duration-300 transform ${
+                  isVisible['why-choose'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: `${index * 80}ms` }}
+              >
+                <div className="flex-shrink-0">
+                  <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-red-600 text-white group-hover:scale-110 transition-transform">
+                    <CheckCircle className="h-6 w-6" />
+                  </div>
+                </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600">{item.description}</p>
+                  <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                    {item.description}
+                  </p>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Meet Our Team
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Experienced professionals dedicated to your project's success
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {team.map(member => (
-              <div key={member.id} className="bg-white rounded-xl shadow-md overflow-hidden">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-6 text-center">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-blue-600">{member.position}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <Users className="h-16 w-16 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold mb-4">Join Our Team</h2>
-            <p className="text-xl text-blue-100 mb-6 max-w-2xl mx-auto">
-              We're always looking for talented individuals to join our growing team
-            </p>
           </div>
         </div>
       </section>

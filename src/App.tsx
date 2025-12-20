@@ -4,7 +4,6 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
-import Portfolio from './pages/Portfolio';
 import Contact from './pages/Contact';
 
 function App() {
@@ -12,11 +11,10 @@ function App() {
 
   useEffect(() => {
     const titles: { [key: string]: string } = {
-      home: 'BuildPro - Professional Construction Services',
-      about: 'About Us - BuildPro Construction',
-      services: 'Our Services - BuildPro Construction',
-      portfolio: 'Portfolio - BuildPro Construction',
-      contact: 'Contact Us - BuildPro Construction'
+      home: 'Red Earth - Professional Construction Services',
+      about: 'About Us - Red Earth Construction',
+      services: 'Our Services - Red Earth Construction',
+      contact: 'Contact Us - Red Earth Construction'
     };
     document.title = titles[currentPage] || titles.home;
   }, [currentPage]);
@@ -26,11 +24,9 @@ function App() {
       case 'home':
         return <Home onNavigate={setCurrentPage} />;
       case 'about':
-        return <About />;
+        return <About onNavigate={setCurrentPage} />;
       case 'services':
         return <Services onNavigate={setCurrentPage} />;
-      case 'portfolio':
-        return <Portfolio />;
       case 'contact':
         return <Contact />;
       default:

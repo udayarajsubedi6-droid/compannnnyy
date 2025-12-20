@@ -1,4 +1,5 @@
 import { Service, Project, TeamMember, Testimonial } from '../types';
+import { CheckCircle, Users, Star, Briefcase } from 'lucide-react';
 
 export const services: Service[] = [
   {
@@ -118,8 +119,33 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const stats = [
-  { label: 'Projects Completed', value: '500+' },
-  { label: 'Years Experience', value: '25+' },
-  { label: 'Team Members', value: '50+' },
-  { label: 'Client Satisfaction', value: '99%' }
+  {
+    label: 'Projects Completed',
+    value: '200+',
+    icon: 'Briefcase', // Lucide icon name
+  },
+  {
+    label: 'Years of Experience',
+    value: '8+',
+    icon: 'CheckCircle',
+  },
+  {
+    label: 'Team Members',
+    value: '50+',
+    icon: 'Users',
+  },
+  {
+    label: 'Client Satisfaction',
+    value: '99%',
+    icon: 'Star',
+  },
+];
+                            
+ 
+export const heroImages = [
+  'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=1920',
+  'https://images.pexels.com/photos/159306/construction-site-build-construction-work-159306.jpeg?auto=compress&cs=tinysrgb&w=1920',
+  'https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&w=1920',
+  'https://images.pexels.com/photos/1838640/pexels-photo-1838640.jpeg?auto=compress&cs=tinysrgb&w=1920',
+  'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1920'
 ];
