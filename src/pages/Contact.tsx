@@ -155,7 +155,7 @@ export default function Contact() {
                   <Info
                     icon={<Mail className="h-5 w-5" />}
                     title="Email"
-                    value="redearth.eng@gmail.com"
+                    value="redearthnepal@gmail.com"
                   />
                   <Info
                     icon={<MapPin className="h-5 w-5" />}

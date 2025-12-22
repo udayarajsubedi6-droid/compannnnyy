@@ -72,7 +72,7 @@ export default function Footer({ onNavigate }: FooterProps) {
               </li>
               <li className="flex items-start gap-2">
                 <Mail className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
-                <span className="break-all">redearth.eng@gmail.com</span>
+                <span className="break-all">redearthnepal@gmail.com</span>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
