@@ -22,16 +22,40 @@ export default function Contact() {
     phone: '',
     message: ''
   });
+
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const form = e.currentTarget;
+  const payload = new FormData(form);
+
+  payload.append("access_key", "6005dc95-9bea-4f22-ae7b-1a00c09b058b");
+
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    body: payload
+  });
+
+  const data = await response.json();
+
+  if (data.success) {
     setSubmitted(true);
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: ""
+    });
+
     setTimeout(() => {
       setSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', message: '' });
     }, 3000);
-  };
+  }
+};
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,7 +72,9 @@ export default function Contact() {
         className="bg-gradient-to-r from-blue-900 to-red-700 text-white py-12 sm:py-16"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+            Contact Us
+          </h1>
           <p className="text-base sm:text-lg md:text-xl text-red-100 max-w-3xl mx-auto">
             Get in touch to discuss your project or request a quote
           </p>
@@ -65,7 +91,10 @@ export default function Contact() {
               viewport={{ once: true }}
               className="lg:col-span-2 bg-white rounded-xl shadow-md p-6 sm:p-8"
             >
-              <motion.h2 variants={item} className="text-xl sm:text-2xl font-bold text-blue-900 mb-6">
+              <motion.h2
+                variants={item}
+                className="text-xl sm:text-2xl font-bold text-blue-900 mb-6"
+              >
                 Send Us a Message
               </motion.h2>
 
@@ -80,7 +109,7 @@ export default function Contact() {
                     Thank You!
                   </h3>
                   <p className="text-slate-600 text-sm sm:text-base">
-                    Your message has been received. We'll get back to you within 24 hours.
+                    Your message has been received. We'll get back to you soon.
                   </p>
                 </motion.div>
               ) : (
@@ -89,13 +118,17 @@ export default function Contact() {
                   onSubmit={handleSubmit}
                   className="space-y-6"
                 >
-                  <motion.div variants={item} className="grid sm:grid-cols-2 gap-6">
+                  <motion.div
+                    variants={item}
+                    className="grid sm:grid-cols-2 gap-6"
+                  >
                     <Input
                       label="Full Name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                     />
+
                     <Input
                       label="Email Address"
                       name="email"
@@ -115,7 +148,9 @@ export default function Contact() {
                   </motion.div>
 
                   <motion.div variants={item}>
-                    <label className="block text-sm font-medium mb-2">Message</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Message
+                    </label>
                     <textarea
                       name="message"
                       rows={6}
@@ -146,22 +181,33 @@ export default function Contact() {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <motion.div variants={item} className="bg-white rounded-xl shadow-md p-6">
+              <motion.div
+                variants={item}
+                className="bg-white rounded-xl shadow-md p-6"
+              >
                 <h3 className="text-lg sm:text-xl font-semibold text-blue-900 mb-4">
                   Contact Information
                 </h3>
+
                 <div className="space-y-4">
-                  <Info icon={<Phone className="h-5 w-5" />} title="Phone" value="01-5312287" />
+                  <Info
+                    icon={<Phone className="h-5 w-5" />}
+                    title="Phone"
+                    value="01-5312287"
+                  />
+
                   <Info
                     icon={<Mail className="h-5 w-5" />}
                     title="Email"
-                    value="redearth.eng@gmail.com"
+                    value="redearthnepal@gmail.com"
                   />
+
                   <Info
                     icon={<MapPin className="h-5 w-5" />}
                     title="Address"
-                    value="Thaha Municipality-9 Makwanpur, Nepal"
+                    value="Bafal, Kathmandu"
                   />
+
                   <Info
                     icon={<Clock className="h-5 w-5" />}
                     title="Business Hours"
@@ -175,7 +221,9 @@ export default function Contact() {
                 whileHover={{ y: -5 }}
                 className="bg-gradient-to-r from-red-700 to-blue-900 rounded-xl p-6 text-white"
               >
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">Quick Response</h3>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                  Quick Response
+                </h3>
                 <p className="text-red-100 text-sm sm:text-base">
                   We respond within 24 hours.
                 </p>
@@ -214,7 +262,9 @@ function Info({
     <div className="flex items-start gap-3">
       <div className="text-red-600 flex-shrink-0 mt-0.5">{icon}</div>
       <div>
-        <div className="font-medium text-blue-900 text-sm sm:text-base">{title}</div>
+        <div className="font-medium text-blue-900 text-sm sm:text-base">
+          {title}
+        </div>
         <div className="text-slate-600 text-sm break-words">{value}</div>
       </div>
     </div>
