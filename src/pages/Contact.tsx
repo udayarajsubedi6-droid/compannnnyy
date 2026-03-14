@@ -199,7 +199,7 @@ export default function Contact() {
                   <Info
                     icon={<Mail className="h-5 w-5" />}
                     title="Email"
-                    value="redearthnepal@gmail.com"
+                    value="info@redearthnepal.com"
                   />
 
                   <Info
