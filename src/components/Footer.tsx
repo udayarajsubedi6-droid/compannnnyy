@@ -1,52 +1,55 @@
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
+import logo from '../components/logo.jpg';
+import { company } from '../data';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
 }
 
+const links = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About us' },
+  { id: 'services', label: 'Services' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'contact', label: 'Contact' },
+];
+
 export default function Footer({ onNavigate }: FooterProps) {
+  const goto = (page: string) => {
+    onNavigate(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-slate-950 text-slate-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-[#0F1926] text-slate-400 pt-16 sm:pt-[72px]">
+      <div className="wrap">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr] gap-10">
           <div>
-            <div
-              className="flex items-center mb-4 cursor-pointer"
-              onClick={() => {
-                onNavigate('home');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-red-700 to-red-900 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">RE</span>
-                </div>
-                <div>
-                  <div className="text-lg font-bold text-white">Red Earth</div>
-                  <div className="text-xs text-red-500 -mt-1">Construction</div>
-                </div>
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="Red Earth Construction" className="h-11 rounded" />
+              <div>
+                <b className="block font-display text-white text-[17px]">RED EARTH</b>
+                <small className="font-mono text-[10px] tracking-[.2em] text-[#E9A79F]">CONSTRUCTION PVT. LTD</small>
               </div>
             </div>
-
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Professional construction services delivering strength, reliability,
-              and precision in every project.
+            <p className="text-[14.5px] leading-relaxed my-5">
+              Professional construction services delivering strength, reliability and precision in every
+              project across Nepal — since {company.since}.
             </p>
+            <div className="flex gap-1.5">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <i key={i} className={`w-0.5 ${i % 4 === 0 ? 'h-3 bg-brick' : 'h-1.5 bg-line'}`} />
+              ))}
+            </div>
           </div>
 
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              {['home', 'about', 'services', 'contact'].map(page => (
-                <li key={page}>
-                  <button
-                    onClick={() => {
-                      onNavigate(page);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="text-sm capitalize transition-colors text-slate-400 hover:text-red-500"
-                  >
-                    {page}
+            <h4 className="text-white font-mono text-xs tracking-[.14em] uppercase mb-5">Company</h4>
+            <ul className="flex flex-col gap-2.5">
+              {links.map((l) => (
+                <li key={l.id}>
+                  <button onClick={() => goto(l.id)} className="text-[14.5px] hover:text-[#E9A79F] hover:pl-1 transition-all">
+                    {l.label}
                   </button>
                 </li>
               ))}
@@ -54,38 +57,43 @@ export default function Footer({ onNavigate }: FooterProps) {
           </div>
 
           <div>
-            <h3 className="text-white font-semibold mb-4">Services</h3>
-            <ul className="space-y-2 text-sm text-slate-400">
+            <h4 className="text-white font-mono text-xs tracking-[.14em] uppercase mb-5">Services</h4>
+            <ul className="flex flex-col gap-2.5 text-[14.5px]">
               <li>Residential Construction</li>
               <li>Commercial Building</li>
-              <li>Renovation & Remodeling</li>
+              <li>Renovation &amp; Remodeling</li>
               <li>Project Management</li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-white font-semibold mb-4">Contact Info</h3>
-            <ul className="space-y-3 text-sm text-slate-400">
-              <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-red-500 flex-shrink-0" />
-                <span>01-5312287</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Mail className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
-                <span className="break-all">redearthnepal@gmail.com</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
-                <span>Thaha Municipality-9 Makwanpur, Nepal</span>
-              </li>
-            </ul>
+            <h4 className="text-white font-mono text-xs tracking-[.14em] uppercase mb-5">Contact</h4>
+            <div className="flex flex-col gap-3.5 text-[14px]">
+              <div className="flex gap-2.5 items-start">
+                <Phone className="h-4 w-4 text-[#E9A79F] shrink-0 mt-0.5" />
+                <span>{company.phone}</span>
+              </div>
+              <div className="flex gap-2.5 items-start">
+                <Mail className="h-4 w-4 text-[#E9A79F] shrink-0 mt-0.5" />
+                <span className="break-all">{company.email}</span>
+              </div>
+              <div className="flex gap-2.5 items-start">
+                <MapPin className="h-4 w-4 text-[#E9A79F] shrink-0 mt-0.5" />
+                <span>{company.address}</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-slate-800 mt-8 pt-6 text-sm text-center text-slate-500">
-          <p>
-            &copy; {new Date().getFullYear()} Red Earth Construction. All rights reserved.
-          </p>
+        <div className="border-t border-white/10 mt-14 py-5 flex flex-wrap justify-between gap-3.5 text-[13px] text-slate-500">
+          <span>© {new Date().getFullYear()} {company.name}. All rights reserved.</span>
+          <div className="flex gap-2.5">
+            {[Facebook, Instagram, Linkedin].map((I, i) => (
+              <a key={i} href="#" className="w-[34px] h-[34px] border border-white/15 rounded-lg flex items-center justify-center hover:bg-brick hover:border-brick hover:text-white transition-colors" aria-label="Social link">
+                <I className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

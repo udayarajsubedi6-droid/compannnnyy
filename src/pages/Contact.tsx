@@ -1,222 +1,145 @@
-import { useState, FormEvent } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, CheckCircle } from 'lucide-react';
+import { useState, type FormEvent, type ChangeEvent, type InputHTMLAttributes } from 'react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
+import { company } from '../data';
+import { Eyebrow, Reveal, Rule } from '../components/ui';
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
+const heroBg =
+  'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+const empty = { name: '', email: '', phone: '', type: '', message: '' };
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState(empty);
+  const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const change = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const submit = (e: FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    // Wire this up to your email service (e.g. Formspree, EmailJS, or a backend).
+    setSent(true);
     setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', message: '' });
-    }, 3000);
+      setSent(false);
+      setForm(empty);
+    }, 4000);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const info: { icon: typeof Phone; label: string; value: string | string[] }[] = [
+    { icon: Phone, label: 'Phone', value: company.phone },
+    { icon: Mail, label: 'Email', value: company.email },
+    { icon: MapPin, label: 'Address', value: [company.address, company.operationa] },
+    { icon: Clock, label: 'Business hours', value: company.hours },
+  ];
 
   return (
     <div>
-      <motion.section
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-gradient-to-r from-blue-900 to-red-700 text-white py-12 sm:py-16"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-          <p className="text-base sm:text-lg md:text-xl text-red-100 max-w-3xl mx-auto">
-            Get in touch to discuss your project or request a quote
+      {/* page hero */}
+      <section className="relative text-white py-[88px] bg-navy overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: `url('${heroBg}')` }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/90 to-brick-dark/55" />
+        <div className="wrap relative z-10">
+          <div className="font-mono text-xs tracking-[.12em] uppercase text-[#E9A79F] mb-3.5">Home / Contact</div>
+          <h1 className="text-white text-[clamp(32px,5vw,56px)] font-extrabold">Let's talk about your project</h1>
+          <p className="text-slate-200 max-w-[56ch] mt-4 text-[18px]">
+            Get in touch to discuss your build or request a free, no-obligation quote. We reply within 24 hours.
           </p>
         </div>
-      </motion.section>
+      </section>
 
-      <section className="py-12 sm:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
-            <motion.div
-              variants={container}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="lg:col-span-2 bg-white rounded-xl shadow-md p-6 sm:p-8"
-            >
-              <motion.h2 variants={item} className="text-xl sm:text-2xl font-bold text-blue-900 mb-6">
-                Send Us a Message
-              </motion.h2>
-
-              {submitted ? (
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="bg-red-50 border border-red-200 rounded-lg p-6 text-center"
-                >
-                  <CheckCircle className="h-10 w-10 sm:h-12 sm:w-12 text-red-600 mx-auto mb-4" />
-                  <h3 className="text-lg sm:text-xl font-semibold text-blue-900 mb-2">
-                    Thank You!
-                  </h3>
-                  <p className="text-slate-600 text-sm sm:text-base">
-                    Your message has been received. We'll get back to you within 24 hours.
-                  </p>
-                </motion.div>
-              ) : (
-                <motion.form
-                  variants={container}
-                  onSubmit={handleSubmit}
-                  className="space-y-6"
-                >
-                  <motion.div variants={item} className="grid sm:grid-cols-2 gap-6">
-                    <Input
-                      label="Full Name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                    />
-                    <Input
-                      label="Email Address"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                    />
-                  </motion.div>
-
-                  <motion.div variants={item}>
-                    <Input
-                      label="Phone Number"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                    />
-                  </motion.div>
-
-                  <motion.div variants={item}>
-                    <label className="block text-sm font-medium mb-2">Message</label>
-                    <textarea
-                      name="message"
-                      rows={6}
-                      required
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 text-sm sm:text-base"
-                    />
-                  </motion.div>
-
-                  <motion.button
-                    variants={item}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    type="submit"
-                    className="w-full bg-red-700 text-white py-3 rounded-lg font-semibold text-sm sm:text-base"
-                  >
-                    Send Message
-                  </motion.button>
-                </motion.form>
-              )}
-            </motion.div>
-
-            <motion.div
-              variants={container}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <motion.div variants={item} className="bg-white rounded-xl shadow-md p-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-blue-900 mb-4">
-                  Contact Information
-                </h3>
-                <div className="space-y-4">
-                  <Info icon={<Phone className="h-5 w-5" />} title="Phone" value="01-5312287" />
-                  <Info
-                    icon={<Mail className="h-5 w-5" />}
-                    title="Email"
-                    value="info@redearthnepal.com"
-                  />
-                  <Info
-                    icon={<MapPin className="h-5 w-5" />}
-                    title="Address"
-                    value="Thaha Municipality-9 Makwanpur, Nepal"
-                  />
-                  <Info
-                    icon={<Clock className="h-5 w-5" />}
-                    title="Business Hours"
-                    value="Sunday–Friday: 9:00 AM – 5:00 PM"
+      <section className="section">
+        <div className="wrap grid lg:grid-cols-[1.4fr_1fr] gap-10">
+          {/* form */}
+          <Reveal className="bg-white border border-line rounded-[14px] p-8 md:p-9 shadow-soft">
+            <Eyebrow index="01">Send us a message</Eyebrow>
+            <Rule />
+            {sent ? (
+              <div className="bg-brick-tint border border-[#e6c2bb] rounded-xl p-7 text-center">
+                <CheckCircle2 className="w-10 h-10 text-brick mx-auto mb-3" />
+                <h3 className="text-xl mb-1.5">Thank you!</h3>
+                <p className="text-steel">Your message has been received. We'll get back to you within 24 hours.</p>
+              </div>
+            ) : (
+              <form onSubmit={submit}>
+                <div className="grid sm:grid-cols-2 gap-4.5" style={{ gap: '1.125rem' }}>
+                  <Field label="Full name" name="name" value={form.name} onChange={change} required placeholder="Your name" />
+                  <Field label="Email address" name="email" type="email" value={form.email} onChange={change} required placeholder="you@email.com" />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4.5 mt-4" style={{ gap: '1.125rem' }}>
+                  <Field label="Phone number" name="phone" value={form.phone} onChange={change} placeholder="98XXXXXXXX" />
+                  <Field label="Project type" name="type" value={form.type} onChange={change} placeholder="e.g. Residential home" />
+                </div>
+                <div className="mt-4">
+                  <label className="block font-mono text-[11px] tracking-[.1em] uppercase text-steel mb-2">Message</label>
+                  <textarea
+                    name="message"
+                    rows={5}
+                    required
+                    value={form.message}
+                    onChange={change}
+                    placeholder="Tell us about your project, site and timeline…"
+                    className="w-full px-4 py-3 border border-line rounded-[10px] bg-concrete text-[15px] focus:outline-none focus:border-brick focus:bg-white focus:ring-4 focus:ring-brick/10 transition"
                   />
                 </div>
-              </motion.div>
+                <button type="submit" className="btn btn-primary w-full justify-center mt-5">
+                  Send message <Send className="w-[17px] h-[17px]" />
+                </button>
+              </form>
+            )}
+          </Reveal>
 
-              <motion.div
-                variants={item}
-                whileHover={{ y: -5 }}
-                className="bg-gradient-to-r from-red-700 to-blue-900 rounded-xl p-6 text-white"
-              >
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">Quick Response</h3>
-                <p className="text-red-100 text-sm sm:text-base">
-                  We respond within 24 hours.
-                </p>
-              </motion.div>
-            </motion.div>
-          </div>
+          {/* info */}
+          <Reveal delay={0.1}>
+            <div className="bg-white border border-line rounded-[14px] p-8 shadow-soft mb-5.5" style={{ marginBottom: '1.375rem' }}>
+              <Eyebrow index="02">Reach us</Eyebrow>
+              <div className="h-4" />
+              {info.map(({ icon: I, label, value }) => (
+                <div key={label} className="flex gap-3.5 py-4 border-b border-line last:border-b-0">
+                  <span className="w-[42px] h-[42px] rounded-[10px] bg-brick-tint text-brick flex items-center justify-center shrink-0">
+                    <I className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <b className="block font-display text-sm">{label}</b>
+                    {Array.isArray(value) ? (
+                      value.map((line, i) => (
+                        <span key={i} className="text-steel text-sm break-words block">
+                          {line}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-steel text-sm break-words">{value}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-[14px] p-8 text-white bg-gradient-to-br from-navy to-navy-light">
+              <h3 className="text-white text-xl mb-2">Quick response guaranteed</h3>
+              <p className="text-slate-300 text-[14.5px]">
+                Send us your project details and our team will respond within 24 hours with next steps and a
+                preliminary estimate.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>
   );
 }
 
-function Input({ label, ...props }: { label: string; [key: string]: unknown }) {
+function Field({
+  label,
+  ...props
+}: {
+  label: string;
+} & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2">{label}</label>
+      <label className="block font-mono text-[11px] tracking-[.1em] uppercase text-steel mb-2">{label}</label>
       <input
         {...props}
-        required
-        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-600 text-sm sm:text-base"
+        className="w-full px-4 py-3 border border-line rounded-[10px] bg-concrete text-[15px] focus:outline-none focus:border-brick focus:bg-white focus:ring-4 focus:ring-brick/10 transition"
       />
-    </div>
-  );
-}
-
-function Info({
-  icon,
-  title,
-  value
-}: {
-  icon: React.ReactNode;
-  title: string;
-  value: string;
-}) {
-  return (
-    <div className="flex items-start gap-3">
-      <div className="text-red-600 flex-shrink-0 mt-0.5">{icon}</div>
-      <div>
-        <div className="font-medium text-blue-900 text-sm sm:text-base">{title}</div>
-        <div className="text-slate-600 text-sm break-words">{value}</div>
-      </div>
     </div>
   );
 }

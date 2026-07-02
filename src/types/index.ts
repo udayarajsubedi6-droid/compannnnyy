@@ -1,29 +1,27 @@
 export interface Service {
-  id: number;
+  icon: string;
   title: string;
   description: string;
-  icon: string;
 }
 
 export interface Project {
-  id: number;
   title: string;
   category: string;
+  location: string;
   image: string;
   description: string;
 }
 
-export interface TeamMember {
-  id: number;
+export interface Testimonial {
   name: string;
-  position: string;
-  image: string;
+  role: string;
+  rating: number;
+  content: string;
 }
 
-export interface Testimonial {
-  id: number;
-  name: string;
-  position: string;
-  content: string;
-  rating: number;
+export interface Stat {
+  value: string;
+  unit: string;
+  label: string;
+  code: string;
 }
