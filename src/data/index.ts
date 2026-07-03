@@ -1,30 +1,14 @@
 import type { Service, Project, Testimonial, Stat } from '../types';
-import ashayaBusPark from '../../PHOTO-2026-06-17-20-28-26.jpg.jpeg';
-import hydropower from '../../PHOTO-2026-06-17-20-28-27.jpg.jpeg';
 import third from '../../PHOTO-2026-06-17-20-28-28.jpg.jpeg';
 import forth from '../../PHOTO-2026-06-17-20-28-29.jpg.jpeg';
 import first from '../../WhatsApp Image 2026-07-01 at 9.14.33 PM.jpeg';
 import second from '../../WhatsApp Image 2026-07-01 at 9.15.01 PM.jpeg';
-
 import a from '../../WhatsApp Image 2026-07-01 at 9.15.33 PM.jpeg';
 import b from '../../WhatsApp Image 2026-07-01 at 9.17.18 PM (5).jpeg';
 import c from '../../WhatsApp Image 2026-07-01 at 9.17.18 PM.jpeg';
 import d from '../../WhatsApp Image 2026-07-01 at 9.17.18 PM (9).jpeg';
 import e from '../../WhatsApp Image 2026-07-01 at 9.17.18 PM (4).jpeg';
 import f from '../../WhatsApp Image 2026-07-01 at 9.17.18 PM (2).jpeg';
-
-
-
-
-
-
-/* ============================================================
-   EDIT YOUR CONTENT HERE
-   Swap the image URLs for your own photos. To use a local
-   photo, drop it in src/assets and import it, e.g.:
-     import ashaya from '../assets/ashaya.jpg'
-   then set image: ashaya
-   ============================================================ */
 
 export const heroImages = [
   first,
@@ -40,8 +24,7 @@ export const stats: Stat[] = [
   { value: '50', unit: '+', label: 'Team members', code: 'REF-03' },
   { value: '99', unit: '%', label: 'Client satisfaction', code: 'REF-04' },
 ];
-
-// icon = a lucide-react icon name
+ 
 export const services: Service[] = [
   { icon: 'Home', title: 'Residential Construction', description: 'Custom homes and residential buildings constructed to your specifications with quality craftsmanship and lasting materials.' },
   { icon: 'Building2', title: 'Commercial Building', description: 'Professional commercial construction for offices, retail spaces and facilities — engineered for performance and durability.' },
@@ -89,9 +72,9 @@ export const projects: Project[] = [
 ];
 
 export const testimonials: Testimonial[] = [
-  { name: 'Robert Thapa', role: 'Homeowner', rating: 5, content: 'Exceptional quality and professionalism. Our home was completed on time and exceeded every expectation.' },
-  { name: 'Lisa Shrestha', role: 'Business Owner', rating: 5, content: 'The team delivered our commercial project flawlessly. Communication was clear the whole way through.' },
-  { name: 'David Gurung', role: 'Property Developer', rating: 5, content: 'Professional, reliable and highly skilled. A genuine pleasure to work with across multiple projects.' },
+  { name: 'Remit Hydropower', role: 'Homeowner', rating: 5, content: 'Exceptional quality and professionalism. Our home was completed on time and exceeded every expectation.' },
+  { name: 'Ashaya Bus Park', role: 'Business Owner', rating: 5, content: 'The team delivered our commercial project flawlessly. Communication was clear the whole way through.' },
+  { name: 'Prem Gurung', role: 'Property Developer', rating: 5, content: 'Professional, reliable and highly skilled. A genuine pleasure to work with across multiple projects.' },
 ];
 
 export const company = {

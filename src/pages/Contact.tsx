@@ -25,10 +25,17 @@ export default function Contact() {
     }, 4000);
   };
 
-  const info: { icon: typeof Phone; label: string; value: string | string[] }[] = [
+ const info: { icon: typeof Phone; label: string; value: string | { label: string; text: string }[] }[] = [
     { icon: Phone, label: 'Phone', value: company.phone },
     { icon: Mail, label: 'Email', value: company.email },
-    { icon: MapPin, label: 'Address', value: [company.address, company.operationa] },
+    {
+      icon: MapPin,
+      label: 'Address',
+      value: [
+        { label: 'Registered Office', text: company.address },
+        { label: 'Operational Office', text: company.operationa },
+      ],
+    },
     { icon: Clock, label: 'Business hours', value: company.hours },
   ];
 
@@ -98,12 +105,12 @@ export default function Contact() {
                   <span className="w-[42px] h-[42px] rounded-[10px] bg-brick-tint text-brick flex items-center justify-center shrink-0">
                     <I className="w-5 h-5" />
                   </span>
-                  <div>
+                 <div>
                     <b className="block font-display text-sm">{label}</b>
                     {Array.isArray(value) ? (
-                      value.map((line, i) => (
-                        <span key={i} className="text-steel text-sm break-words block">
-                          {line}
+                      value.map((item, i) => (
+                        <span key={i} className="text-steel text-sm break-words block mt-1 first:mt-0">
+                          <span className="text-brick font-semibold">{item.label}:</span> {item.text}
                         </span>
                       ))
                     ) : (

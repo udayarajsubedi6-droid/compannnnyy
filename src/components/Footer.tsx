@@ -79,7 +79,10 @@ export default function Footer({ onNavigate }: FooterProps) {
               </div>
               <div className="flex gap-2.5 items-start">
                 <MapPin className="h-4 w-4 text-[#E9A79F] shrink-0 mt-0.5" />
-                <span>{company.address}</span>
+                <div className="flex flex-col gap-2">
+                  <span><span className="text-white/70 font-semibold">Registered:</span> {company.address}</span>
+                  <span><span className="text-white/70 font-semibold">Operational:</span> {company.operationa}</span>
+                </div>
               </div>
             </div>
           </div>

@@ -34,7 +34,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
 
   return (
     <>
-      {/* Top utility bar */}
+      {/* Top utility bar - desktop */}
       <div className="hidden sm:block bg-navy text-[13px] text-slate-300">
         <div className="wrap flex items-center justify-between h-10">
           <div className="flex items-center gap-6">
@@ -52,11 +52,31 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
             <span className="font-mono text-[11px] tracking-[.12em] font-semibold text-[#0f1b2b] bg-amber-brand px-2.5 py-0.5 rounded-full">
               EST. {company.since}
             </span>
-            <span className="inline-flex items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5 text-[#E9A79F]" /> Makwanpur, Nepal  
-              <MapPin className="h-3.5 w-3.5 text-[#E9A79F]" /> Bafal, Kathmandu 
- </span>
+            <span className="hidden xl:inline-flex items-center gap-1.5">
+              <MapPin className="h-3.5 w-3.5 text-[#E9A79F]" />
+              <span className="text-white font-semibold">Registered:</span>&nbsp;Thaha Municipality-9, Makwanpur
+            </span>
+            <span className="hidden xl:inline-flex items-center gap-1.5">
+              <MapPin className="h-3.5 w-3.5 text-[#E9A79F]" />
+              <span className="text-white font-semibold">Office:</span>&nbsp;Bafal, Kathmandu
+            </span>
           </div>
+        </div>
+      </div>
+
+      {/* Address bar - mobile only, stacked and readable */}
+      <div className="sm:hidden bg-navy text-[12px] text-slate-300 px-4 py-2.5 flex flex-col gap-1.5">
+        <div className="flex items-start gap-1.5">
+          <MapPin className="h-3.5 w-3.5 text-[#E9A79F] mt-0.5 shrink-0" />
+          <span>
+            <span className="text-white font-semibold">Registered Office:</span> Thaha Municipality-9, Makwanpur, Nepal
+          </span>
+        </div>
+        <div className="flex items-start gap-1.5">
+          <MapPin className="h-3.5 w-3.5 text-[#E9A79F] mt-0.5 shrink-0" />
+          <span>
+            <span className="text-white font-semibold">Operational Office:</span> Bafal, Kathmandu, Nepal
+          </span>
         </div>
       </div>
 
@@ -139,6 +159,17 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
         <button onClick={() => goto('contact')} className="btn btn-primary justify-center mt-5">
           Get a quote <ArrowRight />
         </button>
+
+        <div className="mt-6 pt-4 border-t border-concrete-dark text-[13px] text-slate-500 flex flex-col gap-2">
+          <div className="flex items-start gap-1.5">
+            <MapPin className="h-3.5 w-3.5 text-brick mt-0.5 shrink-0" />
+            <span><b className="text-ink">Registered:</b> Thaha Municipality-9, Makwanpur, Nepal</span>
+          </div>
+          <div className="flex items-start gap-1.5">
+            <MapPin className="h-3.5 w-3.5 text-brick mt-0.5 shrink-0" />
+            <span><b className="text-ink">Operational:</b> Bafal, Kathmandu, Nepal</span>
+          </div>
+        </div>
       </aside>
     </>
   );
