@@ -79,8 +79,8 @@ export const testimonials: Testimonial[] = [
 
 export const company = {
   name: 'Red Earth Construction Pvt. Ltd',
-  phone: '01-5312287',
-  email: 'redearthnepal@gmail.com',
+  phone: '01-5312287', 
+  email: 'info@redearthnepal.com',
   address: 'Thaha Municipality-9, Makwanpur, Nepal',
   operationa: "Bafal, Kathmandu, Nepal",
   hours: 'Sunday–Friday · 9:00 AM – 5:00 PM',

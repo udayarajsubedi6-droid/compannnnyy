@@ -1,5 +1,5 @@
 import { useState, type FormEvent, type ChangeEvent, type InputHTMLAttributes } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, AlertCircle } from 'lucide-react';
 import { company } from '../data';
 import { Eyebrow, Reveal, Rule } from '../components/ui';
 
@@ -10,19 +10,14 @@ const empty = { name: '', email: '', phone: '', type: '', message: '' };
 
 export default function Contact() {
   const [form, setForm] = useState(empty);
-  const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
 
   const change = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    // Wire this up to your email service (e.g. Formspree, EmailJS, or a backend).
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      setForm(empty);
-    }, 4000);
+    setError(true);
   };
 
  const info: { icon: typeof Phone; label: string; value: string | { label: string; text: string }[] }[] = [
@@ -60,11 +55,24 @@ export default function Contact() {
           <Reveal className="bg-white border border-line rounded-[14px] p-8 md:p-9 shadow-soft">
             <Eyebrow index="01">Send us a message</Eyebrow>
             <Rule />
-            {sent ? (
+            {error ? (
               <div className="bg-brick-tint border border-[#e6c2bb] rounded-xl p-7 text-center">
-                <CheckCircle2 className="w-10 h-10 text-brick mx-auto mb-3" />
-                <h3 className="text-xl mb-1.5">Thank you!</h3>
-                <p className="text-steel">Your message has been received. We'll get back to you within 24 hours.</p>
+                <AlertCircle className="w-10 h-10 text-brick mx-auto mb-3" />
+                <h3 className="text-xl mb-1.5">We couldn't send your message</h3>
+                <p className="text-steel">
+                  Sorry, something went wrong sending mail from here. Please email us directly at{' '}
+                  <a href="mailto:info@redearthnepal.com" className="text-brick font-semibold underline">
+                    info@redearthnepal.com
+                  </a>{' '}
+                  and we'll get back to you within 24 hours.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setError(false)}
+                  className="mt-5 font-mono text-[11px] tracking-[.1em] uppercase text-steel underline"
+                >
+                  Try again
+                </button>
               </div>
             ) : (
               <form onSubmit={submit}>
